@@ -1,18 +1,61 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Modal from 'react-modal';
+import RecipesList from './components/recipes-list';
+import AddButton from './components/add-button';
+import AddRecipe from './components/add-recipe';
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      recipesList : [
+        {
+          title: "mousse",
+          ingredients: "chocolat, oeuf, farine"
+        }
+      ],
+      modalIsOpen: false
+    };
+
+    this.addRecipeModal = this.addRecipeModal.bind(this);
+    this.addRecipe = this.addRecipe.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  addRecipeModal() {
+    this.setState({modalIsOpen: true});
+  }
+
+  addRecipe(newRecipe) {
+    let updatedList = this.state.recipesList;
+    updatedList.push(newRecipe);
+    this.setState({recipesList: updatedList})
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
+  }
+
   render() {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h2>Your Recipe Box</h2>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div className="App-body">
+          <RecipesList list={this.state.recipesList} />
+          <AddButton what="a recipe" openModal={this.addRecipeModal} />
+        </div>
+        <Modal
+          isOpen = {this.state.modalIsOpen}
+          contentLabel= "Add a recipe"
+          shouldCloseOnOverlayClick={true}
+          onRequestClose = {() => this.setState({ modalIsOpen: false})}
+        >
+          <AddRecipe addRecipe={this.addRecipe} closeModal={this.closeModal} />
+        </Modal>
       </div>
     );
   }
