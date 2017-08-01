@@ -4,14 +4,14 @@ const IngredientsList = ( { list }) => {
 
   const ingredientsList = list.map((ingredient, index) => {
     return (
-      <div className="ingredient" key={index}>{ingredient}</div>
+      <li className="list-group-item" key={index}>{ingredient}</li>
     );
   });
 
   return (
-    <div className="ingredients">
-      {ingredientsList}
-    </div>
+      <ul className="list-group">
+        {ingredientsList}
+      </ul>
   );
 };
 
