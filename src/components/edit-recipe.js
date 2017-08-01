@@ -64,18 +64,17 @@ class EditRecipe extends Component {
             />
           </div>
           <div className="form-group">
-
+            <label htmlFor="recipe-ingredients">Add your ingredients, separated by commas</label>
+            <input
+              id="recipe-ingredients"
+              type="text"
+              name="ingredients"
+              className="form-control"
+              placeholder="Apples, flour, eggs..."
+              value={this.state.ingredients}
+              onChange={this.changeIngredients}
+            />
           </div>
-          <label htmlFor="recipe-ingredients">Add your ingredients, separated by commas</label>
-          <input
-            id="recipe-ingredients"
-            type="text"
-            name="ingredients"
-            className="form-control"
-            placeholder="Apples, flour, eggs..."
-            value={this.state.ingredients}
-            onChange={this.changeIngredients}
-          />
         </Modal.Body>
         <Modal.Footer>
           <button type="submit" className="btn btn-primary btn-submit" value="Submit">Save</button>

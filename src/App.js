@@ -30,10 +30,6 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate() {
-
-  }
-
   addRecipeModal() {
     this.setState({selectedRecipe: {} ,modalIsOpen: true});
   }
