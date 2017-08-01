@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 import RecipesList from './components/recipes-list';
 import AddButton from './components/add-button';
-import AddRecipe from './components/add-recipe';
+import EditRecipe from './components/edit-recipe';
 import './App.css';
 
 class App extends Component {
@@ -10,13 +10,15 @@ class App extends Component {
     super(props);
 
     this.state = {
-      recipesList : [],
-      modalIsOpen: false
+      recipesList: [],
+      modalIsOpen: false,
+      selectedRecipe: {}
     };
 
     this.addRecipeModal = this.addRecipeModal.bind(this);
     this.addRecipe = this.addRecipe.bind(this);
     this.editRecipe = this.editRecipe.bind(this);
+    this.saveRecipe = this.saveRecipe.bind(this);
     this.deleteRecipe = this.deleteRecipe.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
@@ -29,7 +31,7 @@ class App extends Component {
   }
 
   addRecipeModal() {
-    this.setState({modalIsOpen: true});
+    this.setState({selectedRecipe: {} ,modalIsOpen: true});
   }
 
   addRecipe(newRecipe) {
@@ -40,20 +42,30 @@ class App extends Component {
   }
 
   editRecipe(index) {
-    const editRecipeFn = () => {
+    return () => {
       console.log("Edit the recipe", index);
+      let recipeToEdit = {
+        index: index,
+        title: this.state.recipesList[index].title,
+        ingredients: this.state.recipesList[index].ingredients
+      };
+      this.setState({selectedRecipe: recipeToEdit, modalIsOpen: true});
     };
-    return editRecipeFn;
+  }
+
+  saveRecipe(index) {
+    return () => {
+      console.log("Save the recipe", index);
+    };
   }
 
   deleteRecipe(index) {
-    const deleteRecipeFn = () => {
+    return () => {
       let newList = this.state.recipesList;
       newList.splice(index, 1);
       this.setState({recipesList: newList});
       localStorage.setItem('recipes',JSON.stringify(newList));
     };
-    return deleteRecipeFn;
   }
 
   closeModal() {
@@ -80,7 +92,12 @@ class App extends Component {
           shouldCloseOnOverlayClick={true}
           onRequestClose = {() => this.setState({ modalIsOpen: false})}
         >
-          <AddRecipe addRecipe={this.addRecipe} closeModal={this.closeModal} />
+          <EditRecipe
+            addRecipe={this.addRecipe}
+            saveRecipe={this.saveRecipe}
+            closeModal={this.closeModal}
+            {...this.state.selectedRecipe}
+          />
         </Modal>
       </div>
     );

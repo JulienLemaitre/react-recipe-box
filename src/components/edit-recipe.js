@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 
-class AddRecipe extends Component {
+const INITIAL_STATE = {
+  title: "",
+  ingredients: ""
+};
+
+class EditRecipe extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      title: "",
-      ingredients: ""
+      title: props.title,
+      ingredients: props.ingredients
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.changeTitle = this.changeTitle.bind(this);
@@ -24,12 +29,18 @@ class AddRecipe extends Component {
   }
 
   handleSubmit(event) {
-    console.log("A recipe has been submitted :", this.state.title);
-    this.props.addRecipe({title: this.state.title, ingredients: this.state.ingredients});
+    if (this.props.index) {
+      console.log("Save Recipe edited");
+      this.props.saveRecipe({title: this.state.title, ingredients: this.state.ingredients});
+    } else {
+      console.log("A new recipe has been submitted :", this.state.title);
+      this.props.addRecipe({title: this.state.title, ingredients: this.state.ingredients});
+    }
     this.closeModal();
     event.preventDefault();
   }
   closeModal() {
+    this.setState(INITIAL_STATE);
     this.props.closeModal();
   }
 
@@ -58,4 +69,4 @@ class AddRecipe extends Component {
   }
 }
 
-export default AddRecipe;
+export default EditRecipe;
