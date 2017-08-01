@@ -16,6 +16,8 @@ class App extends Component {
 
     this.addRecipeModal = this.addRecipeModal.bind(this);
     this.addRecipe = this.addRecipe.bind(this);
+    this.editRecipe = this.editRecipe.bind(this);
+    this.deleteRecipe = this.deleteRecipe.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
 
@@ -37,6 +39,23 @@ class App extends Component {
     localStorage.setItem('recipes',JSON.stringify(updatedList));
   }
 
+  editRecipe(index) {
+    const editRecipeFn = () => {
+      console.log("Edit the recipe", index);
+    };
+    return editRecipeFn;
+  }
+
+  deleteRecipe(index) {
+    const deleteRecipeFn = () => {
+      let newList = this.state.recipesList;
+      newList.splice(index, 1);
+      this.setState({recipesList: newList});
+      localStorage.setItem('recipes',JSON.stringify(newList));
+    };
+    return deleteRecipeFn;
+  }
+
   closeModal() {
     this.setState({modalIsOpen: false});
   }
@@ -48,7 +67,11 @@ class App extends Component {
           <h2>Your Recipe Box</h2>
         </div>
         <div className="App-body">
-          <RecipesList list={this.state.recipesList} />
+          <RecipesList
+            list={this.state.recipesList}
+            editRecipe={this.editRecipe}
+            deleteRecipe={this.deleteRecipe}
+          />
           <AddButton what="a recipe" openModal={this.addRecipeModal} />
         </div>
         <Modal

@@ -12,7 +12,12 @@ const RecipesList = (props) => {
           </a>
         </div>
         <div id={`collapse${index}`} className="panel-collapse collapse" role="tabpanel" aria-labelledby={`heading${index}`}>
-          <IngredientsList list={recipe.ingredients.split(",")} />
+          <IngredientsList
+            list={recipe.ingredients.split(",")}
+            index={index}
+            editRecipe={props.editRecipe(index)}
+            deleteRecipe={props.deleteRecipe(index)}
+          />
         </div>
       </div>
     )
