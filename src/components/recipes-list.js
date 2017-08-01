@@ -5,10 +5,10 @@ const RecipesList = (props) => {
 
   const recipesList = props.list.map((recipe, index) => {
     return (
-      <div className="panel panel-default" key={index}>
+      <div className="panel" key={index}>
         <div className="panel-heading" role="tab" id={`heading${index}`}>
-          <a role="button" data-toggle="collapse" data-parent="#accordion" href={`#collapse${index}`} aria-expanded="true" aria-controls={`#collapse${index}`}>
-            <h4 className="panel-title">{recipe.title}</h4>
+          <a className="recipe-link collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href={`#collapse${index}`} aria-expanded="true" aria-controls={`#collapse${index}`}>
+            <h2 className="panel-title">{recipe.title}</h2>
           </a>
         </div>
         <div id={`collapse${index}`} className="panel-collapse collapse" role="tabpanel" aria-labelledby={`heading${index}`}>

@@ -1,24 +1,61 @@
-.App {
-  text-align: center;
-}
+html, body, #root {
+  height: 100%; }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
+.App {
+  height: 100%;
+  text-align: center; }
 
 .App-header {
   background-color: #222;
-  height: 150px;
   padding: 20px;
-  color: white;
-}
+  color: white; }
 
-.App-intro {
-  font-size: large;
-}
+h1 small {
+  color: orange; }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
+.App-body {
+  margin-top: 1.5em; }
+
+.panel h3 {
+  margin-top: 0; }
+
+.panel-heading {
+  background-color: #444444;
+  border-radius: 6px 6px 0 0; }
+
+.panel-title {
+  font-size: 30px; }
+
+.panel-body {
+  background-color: #def0f8;
+  border-radius: 0 0 6px 6px; }
+
+a.recipe-link, a.recipe-link.collapsed:hover, a.recipe-link:focus {
+  color: orange;
+  text-decoration: none; }
+
+a.recipe-link.collapsed {
+  color: #fff; }
+
+li.ingredient {
+  padding: 0.5em 1em;
+  margin: 0.5em;
+  border: solid 1px orange;
+  border-radius: 4px; }
+
+.buttons button {
+  margin: 0 0.5em;
+  padding-left: 2em;
+  padding-right: 2em; }
+  .buttons button.btn-edit {
+    padding-left: 4em;
+    padding-right: 4em; }
+
+.modal-container {
+  position: relative; }
+
+.modal-container .modal, .modal-container .modal-backdrop {
+  position: absolute; }
+
+.modal-body {
+  text-align: left; }

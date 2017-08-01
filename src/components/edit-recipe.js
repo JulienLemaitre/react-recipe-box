@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Modal, Button } from 'react-bootstrap';
 
 const INITIAL_STATE = {
   title: "",
@@ -29,11 +30,9 @@ class EditRecipe extends Component {
   }
 
   handleSubmit(event) {
-    if (this.props.index) {
-      console.log("Save Recipe edited");
-      this.props.saveRecipe({title: this.state.title, ingredients: this.state.ingredients});
+    if (Number.isInteger(this.props.index)) {
+      this.props.saveRecipe({title: this.state.title, ingredients: this.state.ingredients, index: this.props.index});
     } else {
-      console.log("A new recipe has been submitted :", this.state.title);
       this.props.addRecipe({title: this.state.title, ingredients: this.state.ingredients});
     }
     this.closeModal();
@@ -48,23 +47,42 @@ class EditRecipe extends Component {
 
     return (
       <form onSubmit={this.handleSubmit}>
-        <button onClick={this.closeModal}>Close</button>
-        <label>Recipe Title</label>
-        <input
-          type="text"
-          name="title"
-          value={this.state.title}
-          onChange={this.changeTitle}
-        />
-        <label>Add your ingredients, separated by commas</label>
-        <input
-          type="text"
-          name="ingredients"
-          value={this.state.ingredients}
-          onChange={this.changeIngredients}
-        />
-        <input type="submit" value="Submit" />
+        <Modal.Header closeButton onHide={this.closeModal}>
+          <Modal.Title id="contained-modal-title">Recipe editing</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="form-group">
+            <label htmlFor="recipe-title">Recipe Title</label>
+            <input
+              id="recipe-title"
+              type="text"
+              className="form-control"
+              placeholder="Apple pie"
+              name="title"
+              value={this.state.title}
+              onChange={this.changeTitle}
+            />
+          </div>
+          <div className="form-group">
+
+          </div>
+          <label htmlFor="recipe-ingredients">Add your ingredients, separated by commas</label>
+          <input
+            id="recipe-ingredients"
+            type="text"
+            name="ingredients"
+            className="form-control"
+            placeholder="Apples, flour, eggs..."
+            value={this.state.ingredients}
+            onChange={this.changeIngredients}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <button type="submit" className="btn btn-primary btn-submit" value="Submit">Save</button>
+          <Button onClick={this.closeModal} className="btn-close">Close</Button>
+        </Modal.Footer>
       </form>
+
     );
   }
 }

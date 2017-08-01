@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Modal from 'react-modal';
+import { Modal } from 'react-bootstrap';
 import RecipesList from './components/recipes-list';
 import AddButton from './components/add-button';
 import EditRecipe from './components/edit-recipe';
@@ -30,6 +30,10 @@ class App extends Component {
     }
   }
 
+  componentDidUpdate() {
+
+  }
+
   addRecipeModal() {
     this.setState({selectedRecipe: {} ,modalIsOpen: true});
   }
@@ -43,7 +47,6 @@ class App extends Component {
 
   editRecipe(index) {
     return () => {
-      console.log("Edit the recipe", index);
       let recipeToEdit = {
         index: index,
         title: this.state.recipesList[index].title,
@@ -53,10 +56,13 @@ class App extends Component {
     };
   }
 
-  saveRecipe(index) {
-    return () => {
-      console.log("Save the recipe", index);
-    };
+  saveRecipe(editedRecipeInfos) {
+      const { title, ingredients, index } = editedRecipeInfos;
+      let changedList = this.state.recipesList;
+      let changedRecipe = { title: title, ingredients: ingredients };
+      changedList.splice(index, 1, changedRecipe);
+      this.setState({recipesList: changedList});
+      localStorage.setItem('recipes', JSON.stringify(changedList));
   }
 
   deleteRecipe(index) {
@@ -74,11 +80,11 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App modal-container">
         <div className="App-header">
-          <h2>Your Recipe Box</h2>
+          <h1>Your Recipe Box<br /><small>Stored in your browser !</small></h1>
         </div>
-        <div className="App-body">
+        <div className="App-body container">
           <RecipesList
             list={this.state.recipesList}
             editRecipe={this.editRecipe}
@@ -87,10 +93,10 @@ class App extends Component {
           <AddButton what="a recipe" openModal={this.addRecipeModal} />
         </div>
         <Modal
-          isOpen = {this.state.modalIsOpen}
-          contentLabel= "Add a recipe"
-          shouldCloseOnOverlayClick={true}
-          onRequestClose = {() => this.setState({ modalIsOpen: false})}
+          show={this.state.modalIsOpen}
+          onHide={this.closeModal}
+          container={this}
+          aria-labelledby="contained-modal-title"
         >
           <EditRecipe
             addRecipe={this.addRecipe}

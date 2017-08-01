@@ -1,21 +1,21 @@
 import React from 'react';
 
-const IngredientsList = ( { list, index, editRecipe, deleteRecipe }) => {
+const IngredientsList = ( { list, editRecipe, deleteRecipe }) => {
 
   const ingredientsList = list.map((ingredient, index) => {
     return (
-      <li className="list-group-item" key={index}>{ingredient}</li>
+      <li className="ingredient" key={index}>{ingredient}</li>
     );
   });
 
   return (
     <div className="panel-body">
-      <h5>Ingredients</h5>
-      <ul className="list-group">
+      <h3>Ingredients</h3>
+      <ul className="list-inline">
         {ingredientsList}
       </ul>
-      <p>
-        <button type="button" className="btn btn-primary" onClick={editRecipe}>Edit</button>
+      <p className="buttons">
+        <button type="button" className="btn btn-primary btn-edit" onClick={editRecipe}>Edit</button>
         <button type="button" className="btn btn-danger" onClick={deleteRecipe}>Delete</button>
       </p>
     </div>
