@@ -10,18 +10,20 @@ class App extends Component {
     super(props);
 
     this.state = {
-      recipesList : [
-        {
-          title: "mousse",
-          ingredients: "chocolat, oeuf, farine"
-        }
-      ],
+      recipesList : [],
       modalIsOpen: false
     };
 
     this.addRecipeModal = this.addRecipeModal.bind(this);
     this.addRecipe = this.addRecipe.bind(this);
     this.closeModal = this.closeModal.bind(this);
+  }
+
+  componentDidMount() {
+    const storage = localStorage.getItem('recipes');
+    if (storage) {
+      this.setState({recipesList : JSON.parse(storage)});
+    }
   }
 
   addRecipeModal() {
@@ -31,7 +33,8 @@ class App extends Component {
   addRecipe(newRecipe) {
     let updatedList = this.state.recipesList;
     updatedList.push(newRecipe);
-    this.setState({recipesList: updatedList})
+    this.setState({recipesList: updatedList});
+    localStorage.setItem('recipes',JSON.stringify(updatedList));
   }
 
   closeModal() {

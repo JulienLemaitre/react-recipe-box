@@ -2,9 +2,9 @@ import React from 'react';
 
 const IngredientsList = ( { list }) => {
 
-  const ingredientsList = list.map((ingredient) => {
+  const ingredientsList = list.map((ingredient, index) => {
     return (
-      <div className="ingredient">{ingredient}</div>
+      <div className="ingredient" key={index}>{ingredient}</div>
     );
   });
 
